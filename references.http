@@ -1,0 +1,28 @@
+###
+
+GET http://localhost:3000/usuarios
+
+###
+
+POST http://localhost:3000/usuarios
+Content-Type: application/json
+
+{
+    "nome": "Pinduca",
+    "senha": "123",
+    "email": "Pinduca@gmail.com",
+    "telefone": "(48) 9 9999-9999"
+}
+
+###
+
+GET http://localhost:3000/categorias
+
+###
+
+POST http://localhost:3000/categorias
+Content-Type: application/json
+
+{
+    "nome": "Emagracimento"
+}
