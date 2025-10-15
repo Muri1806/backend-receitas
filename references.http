@@ -16,6 +16,22 @@ Content-Type: application/json
 
 ###
 
+DELETE http://localhost:3000/usuarios/10
+
+###
+
+PUT http://localhost:3000/usuarios/2
+Content-Type: application/json
+
+{
+    "nome": "Pindas",
+    "senha": "12345",
+    "email": "Pinduca@gmail.com",
+    "telefone": "(48) 9 9999-9999"
+}
+
+###
+
 GET http://localhost:3000/categorias
 
 ###
@@ -25,4 +41,17 @@ Content-Type: application/json
 
 {
     "nome": "Emagracimento"
+}
+
+###
+
+DELETE http://localhost:3000/categorias/2
+
+###
+
+PUT http://localhost:3000/categorias/3
+Content-Type: application/json
+
+{
+    "nome": "Deixar de ser obeso"
 }

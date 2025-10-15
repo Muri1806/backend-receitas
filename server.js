@@ -13,7 +13,7 @@ const pool = new Pool({
 
 const server = Fastify()
 
-// ====================================================================
+// USUARIOS ====================================================================
 
 server.get("/usuarios", async (req, reply) => {
     try {
@@ -32,12 +32,37 @@ server.post("/usuarios", async (req, reply) => {
             [nome, senha, email, telefone]
         )
         reply.status(200).send(resultado.rows[0])
-    } catch (e) {
-        reply.status(500).send({ error: e.message })
+    } catch (err) {
+        reply.status(500).send({ error: err.message })
     }
 })
 
-// ====================================================================
+server.delete('/usuarios/:id', async (req, reply) => {
+    const id = req.params.id
+    try {
+        await pool.query('DELETE FROM USUARIOS WHERE id=$1', [id])
+        reply.send({ message: 'Usuário deletado!' })
+    } catch (err) {
+        reply.status(500).send({ error: err.message })
+    }
+})
+
+server.put("/usuarios/:id", async (req, reply) => {
+    const { nome, senha, email, telefone } = req.body
+    const id = req.params.id
+
+    try {
+        const resultado = await pool.query(
+            'UPDATE USUARIOS SET nome=$1, senha=$2, email=$3, telefone=$4 WHERE id=$5 RETURNING *',
+            [nome, senha, email, telefone, id]
+        )
+        reply.status(200).send(resultado.rows[0])
+    } catch (err) {
+        reply.status(500).send({ error: err.message })
+    }
+})
+
+// CATEGORIAS ====================================================================
 
 server.get("/categorias", async (req, reply) => {
     try {
@@ -56,8 +81,33 @@ server.post("/categorias", async (req, reply) => {
             [nome]
         )
         reply.status(200).send(resultado.rows[0])
-    } catch (e) {
-        reply.status(500).send({ error: e.message })
+    } catch (err) {
+        reply.status(500).send({ error: err.message })
+    }
+})
+
+server.delete('/categorias/:id', async (req, reply) => {
+    const id = req.params.id
+    try {
+        await pool.query('DELETE FROM CATEGORIAS WHERE id=$1', [id])
+        reply.send({ message: 'Categoria deletado!' })
+    } catch (err) {
+        reply.status(500).send({ error: err.message })
+    }
+})
+
+server.put("/categorias/:id", async (req, reply) => {
+    const { nome } = req.body
+    const id = req.params.id
+
+    try {
+        const resultado = await pool.query(
+            'UPDATE CATEGORIAS SET nome=$1 WHERE id=$2 RETURNING *',
+            [nome, id]
+        )
+        reply.status(200).send(resultado.rows[0])
+    } catch (err) {
+        reply.status(500).send({ error: err.message })
     }
 })
 
